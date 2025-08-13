@@ -3,7 +3,7 @@ estudiantes = []
 clases = []
 asistencias = []
 
-# === CARGAR DATOS ===
+# === REGISTRO DE ESTUDIANTES ===
 def generar_legajo():
     while True:
         legajo = random.randint(1000, 9999)
@@ -29,7 +29,7 @@ def agregar_estudiante():
     print("Estudiante agregado correctamente. Legajo asignado:", legajo)
 
 def listar_estudiantes():
-    print("Legajo   DNI     Nombre")
+    print("Legajo   DNI       Nombre")
     for fila in estudiantes:
         print(fila[0], " ", fila[1], " ", fila[2])
 
@@ -65,29 +65,30 @@ def eliminar_estudiante():
     else:
         print("No se encontró ese estudiante.")
 
+# === REGISTRO DE CLASES ===
+
 def agregar_clase():
     codigo = int(input("Ingrese CÓDIGO de la clase: "))
     materia = input("Ingrese Materia: ").title()
     fecha = input("Ingrese Fecha (ej: 2025-09-01): ")
-    hora = input("Ingrese Hora (ej: 08:00): ")
-    fila = [codigo, materia, fecha, hora]
+    fila = [codigo, materia, fecha, ]
     clases.append(fila)
     print("Clase agregada correctamente.")
 
 def listar_clases():
-    print("\nCódigo   Materia           Fecha        Hora")
+    print("\nCódigo   Materia           Fecha")
     if len(clases) == 0:
         print("(no hay clases cargadas)")
     else:
         for fila in clases:
-            print(fila[0], " ", fila[1], " ", fila[2], " ", fila[3])
+            print(fila[0], " ", fila[1], " ", fila[2],)
 
 def ver_clase():
     codigo_buscar = int(input("Ingrese CÓDIGO de la clase: "))
     encontrado = 0
     for fila in clases:
         if fila[0] == codigo_buscar:
-            print("Código:", fila[0], "Materia:", fila[1], "Fecha:", fila[2], "Hora:", fila[3])
+            print("Código:", fila[0], "Materia:", fila[1], "Fecha:", fila[2])
             encontrado = 1
     if encontrado == 0:
         print("No se encontró esa clase.")
@@ -99,10 +100,8 @@ def actualizar_clase():
         if fila[0] == codigo_buscar:
             nueva_materia = input("Nueva Materia: ")
             nueva_fecha = input("Nueva Fecha (ej: 2025-09-01): ")
-            nueva_hora = input("Nueva Hora (ej: 08:00): ")
             fila[1] = nueva_materia
             fila[2] = nueva_fecha
-            fila[3] = nueva_hora
             actualizo = 1
             print("Clase actualizada.")
     if actualizo == 0:
@@ -122,15 +121,6 @@ def eliminar_clase():
     else:
         print("No se encontró esa clase.")
 
-def buscar_estudiante_por_legajo(legajo):
-    indice = -1
-    i = 0
-    for fila in estudiantes:
-        if fila[0] == legajo:
-            indice = i
-        i = i + 1
-    return indice  # -1 si no está
-
 def buscar_clase_por_codigo(codigo):
     indice = -1
     i = 0
@@ -139,6 +129,8 @@ def buscar_clase_por_codigo(codigo):
             indice = i
         i = i + 1
     return indice  # -1 si no está
+
+# === REGISTRO DE ASISTENCIAS ===
 
 def buscar_asistencia(legajo, codigo):
     indice = -1
@@ -150,25 +142,27 @@ def buscar_asistencia(legajo, codigo):
     return indice  # -1 si no está
 
 def agregar_asistencia():
-    legajo = int(input("Ingrese LEGAJO del estudiante: "))
-    idx_est = buscar_estudiante_por_legajo(legajo)
-    if idx_est == -1:
-        print("No se encontró ese estudiante.")
-    else:
-        codigo = int(input("Ingrese CÓDIGO de la clase: "))
-        idx_cla = buscar_clase_por_codigo(codigo)
-        if idx_cla == -1:
-            print("No se encontró esa clase.")
+    if len(estudiantes) == 0:
+        print("No hay estudiantes cargados.")
+        return
+
+    codigo = int(input("Ingrese CÓDIGO de la clase: "))
+    idx_cla = buscar_clase_por_codigo(codigo)
+    if idx_cla == -1:
+        print("No se encontró esa clase.")
+        return
+
+    for est in estudiantes:
+        print(f"Estudiante: {est[2]} (Legajo: {est[0]}, DNI: {est[1]})")
+        texto = input("¿Estuvo presente? (s/n): ")
+        if texto.lower() == "s":
+            estado = "Presente"
         else:
-            texto = input("¿Estuvo presente? (s/n): ")
-            if texto == "s":
-                estado = "Presente"
-            else:
-                estado = "Ausente"
-            dni = estudiantes[idx_est][1]
-            fila = [legajo, dni, codigo, estado]
-            asistencias.append(fila)
-            print("Asistencia registrada.")
+            estado = "Ausente"
+        fila = [est[0], est[1], codigo, estado]
+        asistencias.append(fila)
+    
+    print("Asistencias registradas para toda la clase.")
 
 def listar_asistencias():
     print("\nLegajo   DNI        Clase  Materia           Fecha        Estado")
