@@ -15,8 +15,14 @@ def generar_legajo():
 
 def agregar_estudiante():
     legajo = generar_legajo()
-    dni = input("Ingrese DNI del estudiante: ")
-    nombre = input("Ingrese nombre del estudiante: ")
+    dni = int(input("Ingrese DNI del estudiante: "))
+    while len(str(dni)) != 7 or len(str(dni)) != 8:
+        print("DNI incorrecto, ingrese DNI sin puntos ni espacios")
+        dni = int(input("Ingrese DNI del estudiante: "))
+    nombre = input("Ingrese nombre del estudiante: ").title
+    while len(nombre) < 3:
+        print("Nombre muy corto, intente nuevamente")
+        nombre = input("Ingrese nombre del estudiante: ").title
     fila = [legajo, dni, nombre]
     estudiantes.append(fila)
     print("Estudiante agregado correctamente. Legajo asignado:", legajo)
@@ -88,7 +94,7 @@ def menu_estudiantes():
 
 def agregar_clase():
     codigo = int(input("Ingrese CÓDIGO de la clase: "))
-    materia = input("Ingrese Materia: ")
+    materia = input("Ingrese Materia: ").title
     fecha = input("Ingrese Fecha (ej: 2025-09-01): ")
     hora = input("Ingrese Hora (ej: 08:00): ")
     fila = [codigo, materia, fecha, hora]
