@@ -16,13 +16,13 @@ def generar_legajo():
 def agregar_estudiante():
     legajo = generar_legajo()
     dni = int(input("Ingrese DNI del estudiante: "))
-    while len(str(dni)) != 7 or len(str(dni)) != 8:
+    while len(str(dni)) != 7 and len(str(dni)) != 8:
         print("DNI incorrecto, ingrese DNI sin puntos ni espacios")
         dni = int(input("Ingrese DNI del estudiante: "))
-    nombre = input("Ingrese nombre del estudiante: ").title
-    while len(nombre) < 3:
+    nombre = input("Ingrese nombre del estudiante: ").title()
+    while len(str(nombre)) < 3:
         print("Nombre muy corto, intente nuevamente")
-        nombre = input("Ingrese nombre del estudiante: ").title
+        nombre = input("Ingrese nombre del estudiante: ").title()
     fila = [legajo, dni, nombre]
     estudiantes.append(fila)
     print("Estudiante agregado correctamente. Legajo asignado:", legajo)
