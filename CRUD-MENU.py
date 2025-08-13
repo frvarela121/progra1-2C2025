@@ -5,7 +5,7 @@ asistencias = []
 
 def generar_legajo():
     while True:
-        legajo = random.randint(1000, 9999)  # rango de legajos
+        legajo = random.randint(1000, 9999)
         existe = 0
         for fila in estudiantes:
             if fila[0] == legajo:
@@ -14,7 +14,7 @@ def generar_legajo():
             return legajo
 
 def agregar_estudiante():
-    legajo = generar_legajo()  # genera legajo único
+    legajo = generar_legajo()
     dni = input("Ingrese DNI del estudiante: ")
     nombre = input("Ingrese nombre del estudiante: ")
     fila = [legajo, dni, nombre]
