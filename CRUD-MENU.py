@@ -2,7 +2,6 @@ import random
 estudiantes = []
 clases = []
 asistencias = []
-docentes = []
 
 # === REGISTRO DE ESTUDIANTES ===
 def generar_legajo():
@@ -338,7 +337,6 @@ def consultar_clase_con_asistencias():
     else:
         materia = clases[idx_cla][1]
         fecha = clases[idx_cla][2]
-        hora = clases[idx_cla][3]
         print("Clase => Código:", codigo, " Materia:", materia, " Fecha:", fecha, " Hora:", hora)
         print("Asistentes (Legajo / DNI / Estado):")
 
@@ -349,71 +347,6 @@ def consultar_clase_con_asistencias():
                 hay = 1
         if hay == 0:
             print("  (sin registros)")
-
-# === CARGAR DATOS DOCENTE ===
-
-def agregar_docente():
-    print("\n=== AGREGAR DOCENTE ===")
-    legajo = int(input("Ingrese LEGAJO del docente: "))
-    dni = input("Ingrese DNI del docente: ")
-    nombre = input("Ingrese NOMBRE del docente: ")
-    fila = [legajo, dni, nombre]
-    docentes.append(fila)
-    print("Docente agregado correctamente.")
-
-def listar_docentes():
-    print("\nLegajo   DNI        Nombre")
-    if len(docentes) == 0:
-        print("(no hay docentes cargados)")
-    else:
-        for fila in docentes:
-            print(fila[0], " ", fila[1], " ", fila[2])
-
-def ver_docente():
-    print("\n=== VER DOCENTE ===")
-    legajo_buscar = int(input("Ingrese LEGAJO del docente: "))
-    encontrado = 0
-    for fila in docentes:
-        if fila[0] == legajo_buscar:
-            print("Legajo:", fila[0], "DNI:", fila[1], "Nombre:", fila[2])
-            encontrado = 1
-    if encontrado == 0:
-        print("No se encontró ese docente.")
-
-def actualizar_docente():
-    print("\n=== ACTUALIZAR DOCENTE ===")
-    legajo_buscar = int(input("Ingrese LEGAJO del docente a actualizar: "))
-    actualizo = 0
-    for fila in docentes:
-        if fila[0] == legajo_buscar:
-            nuevo_nombre = input("Nuevo nombre: ")
-            nuevo_dni = input("Nuevo DNI (dejar igual si no cambia): ")
-            fila[2] = nuevo_nombre
-            fila[1] = nuevo_dni
-            actualizo = 1
-            print("Docente actualizado.")
-    if actualizo == 0:
-        print("No se encontró ese docente.")
-
-def eliminar_docente():
-    id_buscar = int(input("Ingrese legajo del docente a eliminar: "))
-    indice = -1
-    contador = 0
-    for fila in docentes:
-        if fila[0] == id_buscar:
-            indice = contador
-        contador = contador + 1
-    if indice != -1:
-        nueva_lista = []
-        i = 0
-        for fila in docentes:
-            if i != indice:
-                nueva_lista.append(fila)
-            i = i + 1
-        docentes = nueva_lista
-        print("Docente eliminado.")
-    else:
-        print("No se encontró ese docente.")
 
 # === ESTADÍSTICAS BÁSICAS ===
 
@@ -680,33 +613,6 @@ def menu_asistencias():
         else:
             print("Opción inválida.")
 
-def menu_docentes():
-    seguir = 1
-    while seguir == 1:
-        print("\n=== GESTIÓN DE DOCENTES ===")
-        print("1) Agregar docente")
-        print("2) Listar docentes")
-        print("3) Ver un docente")
-        print("4) Actualizar docente")
-        print("5) Eliminar docente")
-        print("0) Salir")
-        opcion = input("Elija una opción: ")
-
-        if opcion == "1":
-            agregar_docente()
-        elif opcion == "2":
-            listar_docentes()
-        elif opcion == "3":
-            ver_docente()
-        elif opcion == "4":
-            actualizar_docente()
-        elif opcion == "5":
-            eliminar_docente()
-        elif opcion == "0":
-            seguir = 0
-        else:
-            print("Opción inválida.")
-
 def menu_estadisticas():
     seguir = 1
     while seguir == 1:
@@ -749,7 +655,6 @@ def menu_principal():
         print("3) Registro de asistencias")
         print("4) Consultas con relacionados")
         print("5) Estadísticas")
-        print("6) Gestión de docentes")
         print("0) Salir")
         opcion = input("Elija una opción: ")
 
@@ -770,8 +675,6 @@ def menu_principal():
                 consultar_clase_con_asistencias()
         elif opcion == "5":
             menu_estadisticas()
-        elif opcion == "6":
-            menu_docentes()
         elif opcion == "0":
             seguir = 0
         else:
