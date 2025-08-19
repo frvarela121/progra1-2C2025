@@ -140,7 +140,7 @@ def buscar_clase_por_codigo(codigo):
         if fila[0] == codigo:
             indice = i
         i = i + 1
-    return indice  # -1 si no está
+    return indice
 
 # === REGISTRO DE ASISTENCIAS ===
 
@@ -187,7 +187,6 @@ def listar_asistencias():
             codigo = fila[2]
             estado = fila[3]
 
-            # buscar datos de la clase para mostrar materia/fecha
             idx_cla = buscar_clase_por_codigo(codigo)
             if idx_cla != -1:
                 materia = clases[idx_cla][1]
@@ -324,7 +323,6 @@ def consultar_clase_con_asistencias():
     print("\n=== Consultar CLASE + asistencias ===")
     codigo = int(input("Ingrese CÓDIGO de la clase: "))
 
-    # buscar clase
     idx_cla = -1
     i = 0
     for c in clases:
@@ -337,7 +335,7 @@ def consultar_clase_con_asistencias():
     else:
         materia = clases[idx_cla][1]
         fecha = clases[idx_cla][2]
-        print("Clase => Código:", codigo, " Materia:", materia, " Fecha:", fecha, " Hora:", hora)
+        print("Clase => Código:", codigo, " Materia:", materia, " Fecha:", fecha, " Hora:")
         print("Asistentes (Legajo / DNI / Estado):")
 
         hay = 0
@@ -425,8 +423,6 @@ def porcentaje_asistencias_por_materia():
     if total == 0:
         print("(no hay asistencias)")
     else:
-        # contar asistencias por materia
-        # (sin diccionarios: recorremos materias únicas y contamos)
         materias_unicas = []
         for c in clases:
             materia = c[1]
@@ -439,10 +435,8 @@ def porcentaje_asistencias_por_materia():
 
         for materia in materias_unicas:
             cuenta = 0
-            # contar asistencias cuyo codigo de clase tenga esta materia
             for a in asistencias:
                 codigo = a[2]
-                # buscar clase
                 i = 0
                 idx = -1
                 for c in clases:
@@ -457,7 +451,6 @@ def porcentaje_asistencias_por_materia():
 
 def max_min_clase_por_asistencia():
     print("\n=== Clase con MAYOR y MENOR % asistencia ===")
-    # calcular % por clase y guardar mejor/peor
     mejor_codigo = -1
     mejor_porc = -1.0
     peor_codigo = -1
@@ -496,9 +489,6 @@ def max_min_estudiante_por_presentes():
         mejor_count = -1
         peor_legajo = -1
         peor_count = 999999
-
-        # solo consideramos estudiantes con al menos 1 registro para el mínimo real
-        # si ninguno tiene registros, mostramos 0
         hay_registros = 0
 
         for e in estudiantes:
